@@ -28,8 +28,11 @@ func SetupDatabaseConnection() *gorm.DB {
 	}
 
 	//db.AutoMigrate()
+	db.AutoMigrate(&models.Role{})
+	db.AutoMigrate(&models.Permission{})
 	db.AutoMigrate(&models.User{})
 	db.AutoMigrate(&models.Product{})
+	db.AutoMigrate(&models.RoleHasPermission{})
 	return db
 }
 

@@ -5,6 +5,8 @@ import (
 	"GolangProject/helpers"
 	"GolangProject/models"
 	"GolangProject/services"
+	"fmt"
+	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"strconv"
@@ -21,12 +23,14 @@ type ProductController interface {
 type productController struct {
 	productService services.ProductService
 	jwtService     services.JWTService
+	//userService    services.UserService
 }
 
 func NewProductController(productServ services.ProductService, jwtServ services.JWTService) ProductController {
 	return &productController{
 		productService: productServ,
 		jwtService:     jwtServ,
+		//userService:    userServ,
 	}
 }
 
@@ -61,6 +65,14 @@ func (c *productController) Insert(context *gin.Context) {
 		res := helpers.BuildErrorResponse("Failed to process request", errDTO.Error(), helpers.EmptyObj{})
 		context.JSON(http.StatusBadRequest, res)
 	} else {
+		//authHeader := context.GetHeader("Authorization")
+		//token, err := c.jwtService.ValidateToken(authHeader)
+		//if err != nil {
+		//	panic(err.Error())
+		//}
+		//claims := token.Claims.(jwt.MapClaims)
+		//id := fmt.Sprintf("%v", claims["user_id"])
+		//user := c.userService.Profile(id)
 		result := c.productService.Insert(productCreateDTO)
 		response := helpers.BuildResponse(true, "OK", result)
 		context.JSON(http.StatusCreated, response)
@@ -93,4 +105,14 @@ func (c *productController) Delete(context *gin.Context) {
 	c.productService.Delete(book)
 	res := helpers.BuildResponse(true, "Deleted", helpers.EmptyObj{})
 	context.JSON(http.StatusOK, res)
+}
+
+func (c *productController) getUserIDByToken(token string) interface{} {
+	aToken, err := c.jwtService.ValidateToken(token)
+	if err != nil {
+		panic(err.Error())
+	}
+	claims := aToken.Claims.(jwt.MapClaims)
+	id := fmt.Sprintf("%v", claims["user_id"])
+	return id
 }
