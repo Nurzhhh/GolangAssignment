@@ -33,6 +33,7 @@ func SetupDatabaseConnection() *gorm.DB {
 	db.AutoMigrate(&models.User{})
 	db.AutoMigrate(&models.Product{})
 	db.AutoMigrate(&models.RoleHasPermission{})
+	db.AutoMigrate(&models.Order{})
 	return db
 }
 

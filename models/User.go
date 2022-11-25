@@ -10,6 +10,7 @@ type User struct {
 	Token      string `gorm:"-" json:"token,omitempty"`
 	RoleID     int
 	Role       *Role     `gorm:"foreignkey:RoleID;constraint:OnDelete:SET NULL"`
+	Orders     []Order   `json:"books,omitempty"`
 	Created_at time.Time `gorm:"autoCreateTime" json:"created_at"`
 	Updated_at time.Time `gorm:"autoUpdateTime" json:"updated_at"`
 }
