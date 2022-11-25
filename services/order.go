@@ -15,7 +15,7 @@ type OrderService interface {
 	Update(b dto.OrderUpdateDTO) models.Order
 	Delete(b models.Order)
 	All() []models.Order
-	Show(bookID uint64) models.Order
+	Show(orderID uint64) models.Order
 	IsAllowedToEdit(userID string, orderID uint64) bool
 }
 
@@ -23,7 +23,6 @@ type orderService struct {
 	orderRepository repositories.OrderRepository
 }
 
-// NewBookService .....
 func NewOrderService(orderRepo repositories.OrderRepository) OrderService {
 	return &orderService{
 		orderRepository: orderRepo,

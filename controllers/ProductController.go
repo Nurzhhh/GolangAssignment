@@ -94,15 +94,15 @@ func (c *productController) Update(context *gin.Context) {
 }
 
 func (c *productController) Delete(context *gin.Context) {
-	var book models.Product
+	var order models.Product
 	id, err := strconv.ParseUint(context.Param("id"), 0, 0)
 	if err != nil {
 		response := helpers.BuildErrorResponse("Failed tou get id", "No param id were found", helpers.EmptyObj{})
 		context.JSON(http.StatusBadRequest, response)
 	}
-	book.ID = id
+	order.ID = id
 
-	c.productService.Delete(book)
+	c.productService.Delete(order)
 	res := helpers.BuildResponse(true, "Deleted", helpers.EmptyObj{})
 	context.JSON(http.StatusOK, res)
 }
