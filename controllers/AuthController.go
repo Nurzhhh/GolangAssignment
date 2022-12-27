@@ -13,6 +13,7 @@ import (
 type AuthController interface {
 	Login(ctx *gin.Context)
 	Register(ctx *gin.Context)
+	Support(ctx *gin.Context)
 }
 
 type authController struct {
@@ -67,4 +68,8 @@ func (c *authController) Register(ctx *gin.Context) {
 		response := helpers.BuildResponse(true, "OK!", createdUser)
 		ctx.JSON(http.StatusCreated, response)
 	}
+}
+
+func (c *authController) Support(ctx *gin.Context) {
+
 }

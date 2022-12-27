@@ -47,13 +47,13 @@ func (c *orderController) Show(context *gin.Context) {
 	}
 
 	var order models.Order = c.orderService.Show(id)
-	if (order == models.Order{}) {
-		res := helpers.BuildErrorResponse("Data not found", "No data with given id", helpers.EmptyObj{})
-		context.JSON(http.StatusNotFound, res)
-	} else {
-		res := helpers.BuildResponse(true, "OK", order)
-		context.JSON(http.StatusOK, res)
-	}
+	//if (order == models.Order{}) {
+	//	res := helpers.BuildErrorResponse("Data not found", "No data with given id", helpers.EmptyObj{})
+	//	context.JSON(http.StatusNotFound, res)
+	//} else {
+	//}
+	res := helpers.BuildResponse(true, "OK", order)
+	context.JSON(http.StatusOK, res)
 }
 
 func (c *orderController) Insert(context *gin.Context) {
